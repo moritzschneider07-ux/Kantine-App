@@ -199,33 +199,42 @@
   }
 
 
-  function bestellen() {
+function bestellen() {
 
-    const name =
-      document.getElementById("name").value;
+  const name = document.getElementById("name").value;
+  const anzahl = document.getElementById("anzahl").value;
+  const zeit = document.getElementById("abholzeit").value;
 
-    const anzahl =
-      document.getElementById("anzahl").value;
+  if (name.trim() === "") {
+    alert("Bitte gib deinen Namen ein.");
+    return;
+  }
 
-    const zeit =
-      document.getElementById("abholzeit").value;
+  const daten = {
+    name: name,
+    gericht: ausgewaehltesGericht,
+    anzahl: anzahl,
+    abholzeit: zeit
+  };
 
-
-    if (name.trim() === "") {
-
-      alert("Bitte gib deinen Namen ein.");
-      return;
-
-    }
-
-
+  fetch("https://script.google.com/macros/s/AKfycbygjWM2CFmcyS5l-CB19QKyb-LDSSii5Vptayan5_R4KCaPkcwyagXP7cWNBurX0nJSgw/exec", {
+    method: "POST",
+    body: JSON.stringify(daten)
+  })
+  .then(() => {
     document.getElementById("meldung").innerText =
       "✅ Bestellung erfolgreich! " +
       anzahl + "× " +
       ausgewaehltesGericht +
       " für " + zeit + " Uhr.";
 
-  }
+    document.getElementById("name").value = "";
+  })
+  .catch(() => {
+    document.getElementById("meldung").innerText =
+      "❌ Bestellung konnte nicht gespeichert werden.";
+  });
+}
 
 </script>
 
