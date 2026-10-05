@@ -1,1 +1,233 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Kantine – Essen vorbestellen</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    header {
+      background: #1f6f43;
+      color: white;
+      padding: 25px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    header p {
+      margin-bottom: 0;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .gericht {
+      background: white;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .gericht h2 {
+      margin-top: 0;
+    }
+
+    .preis {
+      font-size: 20px;
+      font-weight: bold;
+      color: #1f6f43;
+    }
+
+    button {
+      background: #1f6f43;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #155331;
+    }
+
+    #bestellung {
+      display: none;
+      background: white;
+      padding: 25px;
+      margin-top: 30px;
+      border-radius: 12px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0 18px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    #meldung {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #1f6f43;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>🍽️ Campus Kantine</h1>
+  <p>Essen einfach vorbestellen</p>
+</header>
+
+<main>
+
+  <h1>Heutiger Speiseplan</h1>
+
+  <div class="gericht">
+    <h2>🧀 Käsespätzle</h2>
+    <p>Käsespätzle mit Röstzwiebeln</p>
+    <p class="preis">5,20 €</p>
+    <button onclick="waehlen('Käsespätzle')">
+      Auswählen
+    </button>
+  </div>
+
+  <div class="gericht">
+    <h2>🍛 Hähnchen-Curry</h2>
+    <p>Hähnchen mit Currysoße und Reis</p>
+    <p class="preis">5,90 €</p>
+    <button onclick="waehlen('Hähnchen-Curry')">
+      Auswählen
+    </button>
+  </div>
+
+  <div class="gericht">
+    <h2>🥦 Gemüse-Curry</h2>
+    <p>Gemüsecurry mit Reis</p>
+    <p class="preis">4,90 €</p>
+    <button onclick="waehlen('Gemüse-Curry')">
+      Auswählen
+    </button>
+  </div>
+
+  <section id="bestellung">
+
+    <h2>Deine Bestellung</h2>
+
+    <p>
+      Gericht:
+      <strong id="gerichtName"></strong>
+    </p>
+
+    <label>Name</label>
+    <input
+      type="text"
+      id="name"
+      placeholder="Vor- und Nachname"
+    >
+
+    <label>Anzahl</label>
+    <select id="anzahl">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+
+    <label>Abholzeit</label>
+    <select id="abholzeit">
+      <option>11:30</option>
+      <option>11:45</option>
+      <option>12:00</option>
+      <option>12:15</option>
+      <option>12:30</option>
+      <option>12:45</option>
+      <option>13:00</option>
+    </select>
+
+    <button onclick="bestellen()">
+      Jetzt vorbestellen
+    </button>
+
+    <p id="meldung"></p>
+
+  </section>
+
+</main>
+
+<script>
+
+  let ausgewaehltesGericht = "";
+
+  function waehlen(gericht) {
+
+    ausgewaehltesGericht = gericht;
+
+    document.getElementById("gerichtName").innerText =
+      gericht;
+
+    document.getElementById("bestellung").style.display =
+      "block";
+
+    document.getElementById("bestellung").scrollIntoView({
+      behavior: "smooth"
+    });
+  }
+
+
+  function bestellen() {
+
+    const name =
+      document.getElementById("name").value;
+
+    const anzahl =
+      document.getElementById("anzahl").value;
+
+    const zeit =
+      document.getElementById("abholzeit").value;
+
+
+    if (name.trim() === "") {
+
+      alert("Bitte gib deinen Namen ein.");
+      return;
+
+    }
+
+
+    document.getElementById("meldung").innerText =
+      "✅ Bestellung erfolgreich! " +
+      anzahl + "× " +
+      ausgewaehltesGericht +
+      " für " + zeit + " Uhr.";
+
+  }
+
+</script>
+
+</body>
+</html>
