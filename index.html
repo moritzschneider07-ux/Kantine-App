@@ -176,6 +176,30 @@
     <p id="meldung"></p>
 
   </section>
+  <section>
+  <h2>⭐ Essen bewerten</h2>
+
+  <label>Gericht</label>
+  <select id="bewertungGericht">
+    <option>Käsespätzle</option>
+    <option>Hähnchen-Curry</option>
+    <option>Gemüse-Curry</option>
+    <option>Salat-Bowl</option>
+  </select>
+
+  <label>Bewertung</label>
+  <select id="sterne">
+    <option value="5">⭐⭐⭐⭐⭐</option>
+    <option value="4">⭐⭐⭐⭐</option>
+    <option value="3">⭐⭐⭐</option>
+    <option value="2">⭐⭐</option>
+    <option value="1">⭐</option>
+  </select>
+
+  <button onclick="bewerten()">Bewertung absenden</button>
+
+  <p id="bewertungMeldung"></p>
+</section>
 
 </main>
 
@@ -235,7 +259,29 @@ function bestellen() {
       "❌ Bestellung konnte nicht gespeichert werden.";
   });
 }
+function bewerten() {
+  const gericht = document.getElementById("bewertungGericht").value;
+  const sterne = document.getElementById("sterne").value;
 
+  const daten = {
+    typ: "bewertung",
+    gericht: gericht,
+    sterne: sterne
+  };
+
+  fetch("https://script.google.com/macros/s/AKfycbygjWM2CFmcyS5l-CB19QKyb-LDSSii5Vptayan5_R4KCaPkcwyagXP7cWNBurX0nJSgw/exec", {
+    method: "POST",
+    body: JSON.stringify(daten)
+  })
+  .then(() => {
+    document.getElementById("bewertungMeldung").innerText =
+      "✅ Danke für deine Bewertung!";
+  })
+  .catch(() => {
+    document.getElementById("bewertungMeldung").innerText =
+      "❌ Bewertung konnte nicht gespeichert werden.";
+  });
+}
 </script>
 
 </body>
